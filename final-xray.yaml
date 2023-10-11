@@ -1,119 +1,119 @@
 {
-    "log": {
-        "loglevel": "warning"
-    },
-    "routing": {
-        "domainStrategy": "IPIfNonMatch",
-        "rules": [
-            {
-                "type": "field",
-                "port": "443",
-                "network": "udp",
-                "outboundTag": "block"
-            },
-            {
-                "type": "field",
-                "ip": [
-                    "geoip:private"
-                ],
-                "outboundTag": "block"
-            }
-        ]
-    },
-    "inbounds": [
-        {
-            "listen": "0.0.0.0",
-            "port": 443,
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "thoi-tiet-openwrt",
-                        "flow": "xtls-rprx-vision"
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "reality",
-                "realitySettings": {
-                    "dest": "1.1.1.1:443",
-                    "serverNames": [
-                        "lienquan.garena.vn"
-                    ],
-                    "privateKey": "sELUHVtMZVXnBVNLOJYOR9NdpZbR7QVjS5b9X0F6iGU",
-                    "shortIds": [
-                        "e9455277471d0a78"
-                    ]
-                }
-            }
-        },
-		{
-            "listen": "0.0.0.0",
-            "port": 80,
-            "protocol": "vless",
-            "settings": {
-                "clients": [
-                    {
-                        "id": "thoi-tiet-openwrt",
-                        "flow": "xtls-rprx-vision"
-                    }
-                ],
-                "decryption": "none"
-            },
-            "streamSettings": {
-                "network": "tcp",
-                "security": "reality",
-                "realitySettings": {
-                    "dest": "1.1.1.1:443",
-                    "serverNames": [
-                        "thoitiet.tiktok.com"
-                    ],
-                    "privateKey": "sELUHVtMZVXnBVNLOJYOR9NdpZbR7QVjS5b9X0F6iGU",
-                    "shortIds": [
-                        "e9455277471d0a78"
-                    ]
-                }
-            }
-        },
-	    	{
-		      	"listen": "0.0.0.0",
-		      	"port": 16557,
-		      	"protocol": "socks",
-		      	"settings": {
-			      	"auth": "password",
-				      "accounts": [
-				      	{
-					      	"user": "admin",
-					      	"pass": "admin123"
-			      		}
-				      ],
-				      "udp": true,
-				      "ip": "127.0.0.1"
-		       	},
-			      "streamSettings": {
-			      	  "network": "tcp",
-				        "security": "none"
-  		    	}
-		    }
-    ],
-    "outbounds": [
-        {
-            "protocol": "freedom",
-            "tag": "direct"
-        },
-        {
-            "protocol": "blackhole",
-            "tag": "block"
+  "log": {
+    "loglevel": "warning"
+  },
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "port": 443,
+        "network": "udp",
+        "outboundTag": "block"
+      },
+      {
+        "type": "field",
+        "ip": [
+          "geoip:private"
+        ],
+        "outboundTag": "block"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "port": 443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "thoi-tiet-openwrt",
+            "flow": "xtls-rprx-vision"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "dest": "1.1.1.1:443",
+          "serverNames": [
+            "lienquan.garena.vn"
+          ],
+          "privateKey": "sELUHVtMZVXnBVNLOJYOR9NdpZbR7QVjS5b9X0F6iGU",
+          "shortIds": [
+            "e9455277471d0a78"
+          ]
         }
-    ],
-    "policy": {
-        "levels": {
-            "0": {
-                "handshake": 2,
-                "connIdle": 120
-            }
+      }
+    },
+    {
+      "listen": "0.0.0.0",
+      "port": 80,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "thoi-tiet-openwrt",
+            "flow": "xtls-rprx-vision"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "dest": "1.1.1.1:443",
+          "serverNames": [
+            "thoitiet.tiktok.com"
+          ],
+          "privateKey": "sELUHVtMZVXnBVNLOJYOR9NdpZbR7QVjS5b9X0F6iGU",
+          "shortIds": [
+            "e9455277471d0a78"
+          ]
         }
+      }
+    },
+    {
+      "listen": "0.0.0.0",
+      "port": 16557,
+      "protocol": "socks",
+      "settings": {
+        "auth": "password",
+        "accounts": [
+          {
+            "user": "admin",
+            "pass": "admin123"
+          }
+        ],
+        "udp": true,
+        "ip": "127.0.0.1"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "none"
+      }
     }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
+    }
+  ],
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 2,
+        "connIdle": 120
+      }
+    }
+  }
 }
