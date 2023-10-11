@@ -56,24 +56,20 @@
       "settings": {
         "clients": [
           {
-            "id": "thoi-tiet-openwrt",
-            "flow": "xtls-rprx-vision"
+            "id": "thoi-tiet-openwrt"
           }
         ],
         "decryption": "none"
       },
       "streamSettings": {
-        "network": "tcp",
-        "security": "reality",
-        "realitySettings": {
-          "dest": "1.1.1.1:443",
-          "serverNames": [
-            "thoitiet.tiktok.com"
-          ],
-          "privateKey": "sELUHVtMZVXnBVNLOJYOR9NdpZbR7QVjS5b9X0F6iGU",
-          "shortIds": [
-            "e9455277471d0a78"
-          ]
+        "network": "ws",
+        "security": "none",
+        "wsSettings": {
+          "acceptProxyProtocol": false,
+          "headers": {
+            "Host": "m.tiktok.com"
+          },
+          "path": "/tiktok"
         }
       }
     },
