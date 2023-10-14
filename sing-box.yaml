@@ -1,0 +1,140 @@
+{
+  "log": {
+    "level": "debug",
+    "timestamp": true
+  },
+  "dns": {
+    "servers": [
+      {
+        "tag": "local",
+        "address": "https://1.1.1.1/dns-query",
+        "detour": "direct"
+      },
+      {
+        "tag": "block",
+        "address": "rcode://success"
+      }
+    ],
+    "rules": [
+      {
+        "geosite": "category-ads-all",
+        "server": "block",
+        "disable_cache": true
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "type": "vless",
+      "listen": "::",
+      "listen_port": 443,
+      "users": [
+        {
+          "uuid": "thoi-tiet-openwrt",
+          "flow": "xtls-rprx-vision"
+        }
+      ],
+      "tls": {
+        "enabled": true,
+        "server_name": "lienquan.garena.vn",
+        "reality": {
+          "enabled": true,
+          "handshake": {
+            "server": "1.1.1.1",
+            "server_port": 443
+          },
+          "private_key": "sELUHVtMZVXnBVNLOJYOR9NdpZbR7QVjS5b9X0F6iGU",
+          "short_id": [
+            "e9455277471d0a78"
+          ]
+        }
+      }
+    },
+    {
+      "type": "vmess",
+      "listen": "::",
+      "listen_port": 80,
+      "users": [
+        {
+          "uuid": "thoi-tiet-openwrt",
+          "alterId": 0
+        }
+      ],
+      "transport": {
+        "headers": {
+          "Host": "m.tiktok.com"
+        },
+        "type": "ws",
+        "path": "/tiktok",
+        "max_early_data": 2048,
+        "early_data_header_name": "Sec-WebSocket-Protocol"
+      }
+    },
+    {
+      "type": "socks",
+      "listen": "::",
+      "listen_port": 16557,
+      "users": [
+        {
+          "username": "admin",
+          "password": "admin123"
+        }
+      ]
+    }
+  ],
+  "outbounds": [
+    {
+      "type": "direct",
+      "tag": "direct"
+    },
+    {
+      "type": "block",
+      "tag": "block"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
+    }
+  ],
+  "route": {
+    "rules": [
+      {
+        "outbound": "dns-out",
+        "protocol": [
+          "dns"
+        ],
+        "port": 53
+      },
+      {
+        "domain_suffix": [
+          "googlesyndication.com"
+        ],
+        "domain": [
+          "regexp:^.*googlesyndication.com$",
+          "regexp:^.*adtival\\.network$"
+        ],
+        "domain_keyword": [
+          "zalo",
+          "zdn",
+          "zadn",
+          "anydesk",
+          "kaspersky"
+        ],
+        "geoip": "vn",
+        "outbound": "direct"
+      },
+      {
+        "geoip": "private",
+        "outbound": "block"
+      },
+      {
+        "geosite": "category-ads-all",
+        "domain_keyword": [
+          "ads"
+        ],
+        "outbound": "block"
+      }
+    ],
+    "final": "direct"
+  }
+}
